@@ -15,13 +15,13 @@ public class Evento {
         LocalDate dataCostruita = LocalDate.of(anno, mese, giorno);
 
         if (dataCostruita.isBefore(LocalDate.now())) {
-            throw new IllegalArgumentException("La data selezionata é già passata.");
+            throw new IllegalArgumentException("Impossibile creare l'evento: La data selezionata é già passata.");
         } else {
             this.data = dataCostruita;
         }
 
         if (postiTotali < 0) {
-            throw new IllegalArgumentException("Il numero di posti totali non può essere inferiore a 0.");
+            throw new IllegalArgumentException("Impossibile creare l'evento: Il numero di posti totali non può essere inferiore a 0.");
         } else {
             this.postiTotali = postiTotali;
         }
@@ -36,7 +36,11 @@ public class Evento {
     }
 
     public void setTitolo(String titolo) {
-        this.titolo = titolo;
+        if (titolo.equals("")) {
+            throw new IllegalArgumentException("Impossibile aggiornare il titolo: Inserire almeno un carattere");
+        } else {
+            this.titolo = titolo;
+        }
     }
 
     public String getData() {
@@ -46,7 +50,7 @@ public class Evento {
     public void setData(int giorno, int mese, int anno) {
         LocalDate dataCostruita = LocalDate.of(anno, mese, giorno);
         if (dataCostruita.isBefore(LocalDate.now())) {
-            throw new IllegalArgumentException("La data selezionata é già passata.");
+            throw new IllegalArgumentException("Impossibile aggiornare la data: La data selezionata é già passata.");
         } else {
             this.data = dataCostruita;
         }
@@ -62,17 +66,19 @@ public class Evento {
 
     // Metodi
 
-    public void prenota() throws Exception {
-        if (this.postiTotali == 0 || this.postiTotali == this.postiPrenotati) {
-            throw new Exception("Spiacenti, non ci sono posti disponibili.");
+    public void prenota() {
+        if (this.postiTotali == 0 ) {
+            throw new IllegalStateException("Spiacenti, non ci sono posti disponibili.");
+        } else if (this.postiPrenotati >= this.postiTotali) {
+            throw new IllegalStateException("Spiacenti, il numero di posti prenotati supera quello dei posti disponibili");
         } else {
             this.postiPrenotati++;
         }
     }
 
-    public void disdici() throws Exception {
+    public void disdici() {
         if (this.postiTotali == 0 || this.postiPrenotati == 0) {
-            throw new Exception("Non ci sono prenotazioni da disdire.");
+            throw new IllegalStateException("Non ci sono prenotazioni da disdire.");
         } else {
             this.postiPrenotati--;
         }

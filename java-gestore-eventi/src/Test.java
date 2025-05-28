@@ -7,8 +7,17 @@ public class Test {
 
         // Richiesta nome evento
         System.out.println("Inserisci il nome dell'evento:");
-        String nome = scanner.nextLine();
+        String nome;
 
+        while (true) {
+            nome = scanner.nextLine();
+            
+            if (nome.equals("")) {
+                System.out.println("Input non valido, inserire almeno un carattere");
+            } else {
+                break;
+            }
+        }
 
         // Richiesta giorno evento
         System.out.println("Inserisci il giorno in numero:");
@@ -62,11 +71,9 @@ public class Test {
                 anno = scanner.nextInt();
                 scanner.nextLine();
 
-                if (anno < 0) {
-                    System.out.println("Input non valido, riprovare:");
-                } else {
-                    break;
-                }
+                // Controllo per date passate già presente nella classe Evento
+
+                break;
             } else {
                 System.out.println("Input non valido, inserire un numero:");
                 scanner.next();
@@ -83,7 +90,7 @@ public class Test {
                 postiTotali = scanner.nextInt();
                 scanner.nextLine();
 
-                // Controllo per numeri negativi già presente nella classe Evento
+                // Controllo per numeri negativi già presente nella classe Evento (Unchecked)
 
                 break;
             } else {
@@ -95,22 +102,113 @@ public class Test {
         // Creazione oggetto Evento
         Evento nuovoEvento = new Evento(nome, giorno, mese, anno, postiTotali);
 
-        //richiesta prenotazioni
-        System.out.println("Evento creato! vuoi prenotare dei posti? [Si/No]");
-        String risposta;
+        //-------------------------------------------- richiesta scelta prenotazioni --------------------------------------------//
 
-        // Controllo prenotazioni
+        System.out.println("Evento creato! vuoi prenotare dei posti? [Si/No]");
+        String rispostaPrenotazione;
+
+        // Controllo scelta prenotazioni
         while (true) {
-            risposta = scanner.nextLine().trim().toLowerCase();
+            rispostaPrenotazione = scanner.nextLine().trim().toLowerCase();
                 
-            if (risposta.equals("si") || risposta.equals("no")) {
+            if (rispostaPrenotazione.equals("si") || rispostaPrenotazione.equals("no")) {
                 break;
             } else {
                 System.out.println("Input non valido, inserire Si o No");
             }
         }
 
-        System.out.println(nuovoEvento.toString()); // solo per prova
+        // Effettuazione prenotazioni
+        int postiPrenotati;
+
+        if (rispostaPrenotazione.equals("si")) {
+            System.out.println("Quanti posti vuoi prenotare?");
+
+            // Controllo Prenotazioni
+            while (true) {
+                if (scanner.hasNextInt()) {
+                    postiPrenotati = scanner.nextInt();
+                    scanner.nextLine();
+
+                    //Controllo per posti prenotati superiori a quelli disponibili già presente nella classe Evento (Unchecked)
+
+                    if (postiPrenotati == 0) {
+                        System.out.println("Input non valido, inserire almeno un posto");
+                    } else if (postiPrenotati < 0) {
+                    System.out.println("Input non valido, Riprovare");
+                    } else {
+                        
+                        for (int i = 0; i < postiPrenotati; i++) {
+                            nuovoEvento.prenota();
+                        }
+
+                        System.out.println("Hai prenotato " + postiPrenotati + " posti");
+                        System.out.println("posti ancora disponibili: " + (nuovoEvento.getPostiTotali() - nuovoEvento.getPostiPrenotati()));
+                        break;
+                    }
+                } else {
+                    System.out.println("Input non valido, inserire solo caratteri numerici");
+                    scanner.next();
+                }
+            }   
+        } else {
+            System.out.println("posti ancora disponibili: " + (nuovoEvento.getPostiTotali() - nuovoEvento.getPostiPrenotati()));
+        }
+
+        //-------------------------------------------- richiesta scelta disdette --------------------------------------------//
+
+        System.out.println("Vuoi disdire dei posti? [Si/No]");
+        String rispostaDisdetta;
+
+        // Controllo scelta disdette
+        while (true) {
+            rispostaDisdetta = scanner.nextLine().trim().toLowerCase();
+                
+            if (rispostaDisdetta.equals("si") || rispostaDisdetta.equals("no")) {
+                break;
+            } else {
+                System.out.println("Input non valido, inserire Si o No");
+            }
+        }
+
+        // Effettuazione disdette
+        int postiDisdetti;
+
+        if (rispostaDisdetta.equals("si")) {
+            System.out.println("Quanti posti vuoi disdire?");
+
+            // Controllo disdette
+            while (true) {
+                if (scanner.hasNextInt()) {
+                    postiDisdetti = scanner.nextInt();
+                    scanner.nextLine();
+
+                    //Controllo per posti prenotati assenti già presente nella classe Evento (Unchecked)
+
+                    if (postiDisdetti == 0) {
+                        System.out.println("Input non valido, inserire almeno un posto");
+                    } else if (postiDisdetti < 0) {
+                    System.out.println("Input non valido, Riprovare");
+                    } else {
+                        
+                        for (int i = 0; i < postiDisdetti; i++) {
+                            nuovoEvento.disdici();
+                        }
+
+                        System.out.println("Hai disdetto " + postiDisdetti + " posti");
+                        System.out.println("posti ancora disponibili: " + (nuovoEvento.getPostiTotali() - nuovoEvento.getPostiPrenotati()));
+                        break;
+                    }
+                } else {
+                    System.out.println("Input non valido, inserire solo caratteri numerici");
+                    scanner.next();
+                }
+            }   
+        } else {
+            System.out.println("posti ancora disponibili: " + (nuovoEvento.getPostiTotali() - nuovoEvento.getPostiPrenotati()));
+        }
+
+        System.out.println("Codice evento: " + nuovoEvento.toString()); // solo per prova
         
         scanner.close();
     }
