@@ -71,7 +71,7 @@ public class Test {
                 anno = scanner.nextInt();
                 scanner.nextLine();
 
-                // Controllo per date passate già presente nella classe Evento
+                // Controllo per date passate già presente nella classe Evento (Unchecked)
 
                 break;
             } else {
@@ -208,7 +208,7 @@ public class Test {
             System.out.println("posti ancora disponibili: " + (nuovoEvento.getPostiTotali() - nuovoEvento.getPostiPrenotati()));
         }
 
-        System.out.println("Codice evento: " + nuovoEvento.toString()); // solo per prova
+        System.out.println("Codice evento: " + nuovoEvento.toString());
         
         scanner.close();
     }
