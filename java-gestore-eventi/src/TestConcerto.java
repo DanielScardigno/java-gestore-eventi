@@ -1,12 +1,13 @@
+import java.time.LocalTime;
 import java.util.Scanner;
 
-public class Test {
+public class TestConcerto {
     public static void main(String[] args) {
         
         Scanner scanner = new Scanner(System.in);
 
         // Richiesta nome evento
-        System.out.println("Inserisci il nome dell'evento:");
+        System.out.println("Inserisci il nome del concerto:");
         String nome;
 
         while (true) {
@@ -80,6 +81,51 @@ public class Test {
             }
         }
 
+        // Richiesta ora
+        System.out.println("Inserisci l'ora");
+        int ora;
+
+        // Controllo ora
+        while (true) {
+            if (scanner.hasNextInt()) {
+                ora = scanner.nextInt();
+                scanner.nextLine();
+
+                if (ora < 0 || ora > 23) {
+                    System.out.println("Input non valido, riprovare:");
+                } else {
+                    break;
+                }
+            } else {
+                System.out.println("Input non valido, inserire un numero:");
+                scanner.next();
+            }
+        }
+
+        // Richiesta minuto
+        System.out.println("Inserisci il minuto");
+        int minuto;
+
+        // Controllo minuto
+        while (true) {
+            if (scanner.hasNextInt()) {
+                minuto = scanner.nextInt();
+                scanner.nextLine();
+
+                if (minuto < 0 || minuto > 59) {
+                    System.out.println("Input non valido, riprovare:");
+                } else {
+                    break;
+                }
+            } else {
+                System.out.println("Input non valido, inserire un numero:");
+                scanner.next();
+            }
+        }
+
+        // Creazione ora
+        LocalTime orario = LocalTime.of(ora, minuto);
+
         // Richiesta posti totali
         System.out.println("Inserisci i posti totali:");
         int postiTotali;
@@ -99,8 +145,28 @@ public class Test {
             }
         }
 
+        //Richiesta prezzo
+        System.out.println("Inserisci il prezzo del biglietto");
+        double prezzo;
+
+        while (true) {
+            if (scanner.hasNextDouble()) {
+                prezzo = scanner.nextDouble();
+                scanner.nextLine();
+
+                if (prezzo < 0) {
+                    System.out.println("Input non valido, riprovare");
+                } else {
+                    break;
+                }
+            } else {
+                System.out.println("Input non valido, inserire un numero");
+                scanner.next();
+            }
+        }
+
         // Creazione oggetto Evento
-        Evento nuovoEvento = new Evento(nome, giorno, mese, anno, postiTotali);
+        Concerto nuovoConcerto = new Concerto(nome, giorno, mese, anno, postiTotali, orario, prezzo);
 
         // scelta prenotazioni
 
@@ -139,7 +205,7 @@ public class Test {
                     } else {
                         
                         for (int i = 0; i < postiPrenotati; i++) {
-                            nuovoEvento.prenota();
+                            nuovoConcerto.prenota();
                         }
 
                         if (postiPrenotati == 1) {
@@ -148,7 +214,7 @@ public class Test {
                             System.out.println("Hai prenotato " + postiPrenotati + " posti");
                         }
 
-                        System.out.println("posti ancora disponibili: " + (nuovoEvento.getPostiTotali() - nuovoEvento.getPostiPrenotati()));
+                        System.out.println("posti ancora disponibili: " + (nuovoConcerto.getPostiTotali() - nuovoConcerto.getPostiPrenotati()));
                         break;
                     }
                 } else {
@@ -157,10 +223,10 @@ public class Test {
                 }
             }   
         } else {
-            System.out.println("posti ancora disponibili: " + (nuovoEvento.getPostiTotali() - nuovoEvento.getPostiPrenotati()));
+            System.out.println("posti ancora disponibili: " + (nuovoConcerto.getPostiTotali() - nuovoConcerto.getPostiPrenotati()));
         }
 
-        // scelta disdette
+        // richiesta scelta disdette
 
         System.out.println("Vuoi disdire dei posti? [Si/No]");
         String rispostaDisdetta;
@@ -197,7 +263,7 @@ public class Test {
                     } else {
                         
                         for (int i = 0; i < postiDisdetti; i++) {
-                            nuovoEvento.disdici();
+                            nuovoConcerto.disdici();
                         }
 
                         if (postiDisdetti == 1) {
@@ -206,7 +272,7 @@ public class Test {
                             System.out.println("Hai disdetto " + postiDisdetti + " posti");
                         }
 
-                        System.out.println("posti ancora disponibili: " + (nuovoEvento.getPostiTotali() - nuovoEvento.getPostiPrenotati()));
+                        System.out.println("posti ancora disponibili: " + (nuovoConcerto.getPostiTotali() - nuovoConcerto.getPostiPrenotati()));
                         break;
                     }
                 } else {
@@ -215,10 +281,10 @@ public class Test {
                 }
             }   
         } else {
-            System.out.println("posti ancora disponibili: " + (nuovoEvento.getPostiTotali() - nuovoEvento.getPostiPrenotati()));
+            System.out.println("posti ancora disponibili: " + (nuovoConcerto.getPostiTotali() - nuovoConcerto.getPostiPrenotati()));
         }
 
-        System.out.println("Codice evento: " + nuovoEvento.toString());
+        System.out.println("Codice evento: " + nuovoConcerto.toString());
         
         scanner.close();
     }

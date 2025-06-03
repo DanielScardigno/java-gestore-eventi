@@ -44,7 +44,7 @@ public class Evento {
     }
 
     public String getData() {
-        return this.data.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        return this.data.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
     public void setData(int giorno, int mese, int anno) {
@@ -86,9 +86,8 @@ public class Evento {
 
     @Override
     public String toString() {
-        DateTimeFormatter formatData = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        String dataFormattata = this.data.format(formatData);
-        String messaggio = dataFormattata + "-" + titolo;
+        String dataFormattata = this.getData();
+        String messaggio = dataFormattata + "-" + this.getTitolo();
         return messaggio.replaceAll(" ", "-");
     }
 }
