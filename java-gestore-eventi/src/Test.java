@@ -103,7 +103,6 @@ public class Test {
         Evento nuovoEvento = new Evento(nome, giorno, mese, anno, postiTotali);
 
         // scelta prenotazioni
-
         System.out.println("Evento creato! vuoi prenotare dei posti? [Si/No]");
         String rispostaPrenotazione;
 
@@ -161,7 +160,6 @@ public class Test {
         }
 
         // scelta disdette
-
         System.out.println("Vuoi disdire dei posti? [Si/No]");
         String rispostaDisdetta;
 
