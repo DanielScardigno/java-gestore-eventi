@@ -26,18 +26,18 @@ public class ProgrammaEventi {
         LocalDate dataCostruita = LocalDate.of(anno, mese, giorno);
         String dataFormattata = dataCostruita.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
-        List<Evento> EventiInData = new ArrayList<>();
+        List<Evento> eventiInData = new ArrayList<>();
 
         for (Evento evento : eventi) {
             if (evento.getData().equals(dataFormattata)) {
-                EventiInData.add(evento);
+                eventiInData.add(evento);
             }
         }
 
-        if (EventiInData.size() == 0) {
+        if (eventiInData.size() == 0) {
             throw new IllegalArgumentException("Non ci sono eventi nella data selezionata");
         } else {
-            return (EventiInData.toString());
+            return (eventiInData.toString());
         }
     }
 
