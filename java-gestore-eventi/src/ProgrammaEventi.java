@@ -28,7 +28,7 @@ public class ProgrammaEventi {
 
         List<Evento> eventiInData = new ArrayList<>();
 
-        for (Evento evento : eventi) {
+        for (Evento evento : this.eventi) {
             if (evento.getData().equals(dataFormattata)) {
                 eventiInData.add(evento);
             }
@@ -42,20 +42,20 @@ public class ProgrammaEventi {
     }
 
     public int getNumeroEventi() {
-        return eventi.size();
+        return this.eventi.size();
     }
 
     public void deleteEventi() {
-        eventi.clear();
+        this.eventi.clear();
     }
 
     public String getEventiOrdinati() {
         
-        eventi.sort(Comparator.comparing(evento -> LocalDate.parse(evento.getData(), DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
+        this.eventi.sort(Comparator.comparing(evento -> LocalDate.parse(evento.getData(), DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
         
         StringBuilder stringBuilder = new StringBuilder();
         
-        for (Evento evento : eventi) {
+        for (Evento evento : this.eventi) {
             stringBuilder.append(evento.toString()).append("\n");
         }
 
