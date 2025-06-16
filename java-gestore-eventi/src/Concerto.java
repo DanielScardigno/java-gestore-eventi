@@ -1,4 +1,7 @@
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
@@ -11,7 +14,12 @@ public class Concerto extends Evento{
 
         super(titolo, giorno, mese, anno, postiTotali);
 
-        this.ora = ora;
+        if (LocalDate.parse(this.getData(), DateTimeFormatter.ofPattern("dd/MM/yyyy")).equals(LocalDate.now()) && ora.isBefore(LocalTime.now())) {
+            throw new IllegalArgumentException("Impossibile aggiornare l'ora: L'ora selezionata é già passata.");
+        } else {
+            this.ora = ora;
+        }
+        
         this.prezzo = prezzo;
     }
 
@@ -22,7 +30,7 @@ public class Concerto extends Evento{
     }
 
     public void setOra(LocalTime ora) {
-        if (ora.isBefore(LocalTime.now())) {
+        if (LocalDate.parse(this.getData(), DateTimeFormatter.ofPattern("dd/MM/yyyy")).equals(LocalDate.now()) && ora.isBefore(LocalTime.now())) {
             throw new IllegalArgumentException("Impossibile aggiornare l'ora: L'ora selezionata é già passata.");
         } else {
             this.ora = ora;
